@@ -6,10 +6,20 @@ CREATE TABLE customers (
     phone_number VARCHAR(15),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY,
+CREATE TABLE accounts (
+    account_id INT PRIMARY KEY,
     customer_id INT,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total_amount DECIMAL(10, 2) NOT NULL,
+    account_type VARCHAR(20) NOT NULL,
+    balance DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'active',
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY,
+    account_id INT,
+    transaction_type VARCHAR(20) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
